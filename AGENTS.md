@@ -5,7 +5,7 @@ Create carousels through the editor UI. Upload one image per slide in order, add
 ## Defaults
 
 - First text layer is a centered title in TikTok Sans Classic with a black, fixed 6 px outline, size 46, paragraph zoom 90%, and vertical center placement.
-- Second text layer is a centered subtitle with white background at fixed 88% opacity, size 36, and paragraph zoom 90%. Adding it places the title above it.
+- Second text layer is a centered subtitle with solid white background at fixed 100% opacity, size 36, and paragraph zoom 90%. Adding it places the title above it.
 - Keep title larger than subtitle. Natural line wrapping is allowed. Tune font size or paragraph zoom for clear reading and hierarchy.
 - Outline width and background opacity are fixed defaults. There are no editor controls for them, and agents should not set them each time.
 - Output ratio defaults to 9:16 at 1080 × 1920.
@@ -25,4 +25,4 @@ The app warns before refresh/navigation if edits are unsaved. The public share U
 
 ## Carousel copy
 
-Before writing carousel slide copy, read [SKILL.md](./public/SKILL.md). It contains the hook library, voice rules, structure, and final cross-check. The deployed copy is available at https://carousel-editor-zeta.vercel.app/SKILL.md.
+Before writing carousel slide copy, read [SKILL.md](./public/SKILL.md). It contains the hook library, voice rules, structure, and final cross-check. For additional structure and cover-hook techniques, consult [Carousel Writer](./public/skills/carousel-writer/SKILL.md) and [Hook Writer](./public/skills/hook-writer/SKILL.md). Use Hook Writer only for the cover; if brand or voice files are absent, follow the brief and project skill without inventing brand details. The deployed copy is available at https://carousel-editor-zeta.vercel.app/SKILL.md.

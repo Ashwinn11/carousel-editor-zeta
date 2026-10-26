@@ -2,13 +2,13 @@
 
 Use the live editor at https://carousel-editor-zeta.vercel.app. This file is also available at https://carousel-editor-zeta.vercel.app/AGENTS.md.
 
-Before writing slide copy, read the carousel writing skill at https://carousel-editor-zeta.vercel.app/SKILL.md. It contains the 18 hook references, writing rules, and output format. This guide covers editor operation and export; the skill covers copywriting.
+Before writing slide copy, read the project carousel skill at https://carousel-editor-zeta.vercel.app/SKILL.md. It contains the 18 hook references, writing rules, and the output format we use. For additional structure and cover-hook techniques, consult the bundled [Carousel Writer](https://carousel-editor-zeta.vercel.app/skills/carousel-writer/SKILL.md) and [Hook Writer](https://carousel-editor-zeta.vercel.app/skills/hook-writer/SKILL.md) references. Use Hook Writer only for the carousel cover. If no brand or voice files are provided, use the user’s brief and the project skill; do not invent brand details. Project defaults and the requested output format take priority over generic recommendations in the reference skills.
 
 ## Defaults
 
 - Export ratio defaults to **9:16**, at **1080 × 1920 px**.
 - Add the title first: centered, TikTok Sans Classic, black fixed **6 px** outline, font size **46**, paragraph zoom **90%**. When alone, center it vertically.
-- Add the subtitle second: centered, white background at fixed **88% opacity**, font size **36**, paragraph zoom **90%**. The editor positions it below the title.
+- Add the subtitle second: centered, solid white background at fixed **100% opacity**, font size **36**, paragraph zoom **90%**. The editor positions it below the title.
 - Keep the title larger than the subtitle. Text wraps naturally; adjust font size and paragraph zoom to keep the slide readable and balanced.
 - Outline width and background opacity are fixed. Do not look for controls or change them.
 - Text layers and formatting are per slide. Changing one slide does not change the others.
