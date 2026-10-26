@@ -2,6 +2,8 @@
 
 Use the live editor at https://carousel-editor-zeta.vercel.app. This file is also available at https://carousel-editor-zeta.vercel.app/AGENTS.md.
 
+Before writing slide copy, read the carousel writing skill at https://carousel-editor-zeta.vercel.app/SKILL.md. It contains the 18 hook references, writing rules, and output format. This guide covers editor operation and export; the skill covers copywriting.
+
 ## Defaults
 
 - Export ratio defaults to **9:16**, at **1080 × 1920 px**.

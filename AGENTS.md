@@ -22,3 +22,7 @@ Create carousels through the editor UI. Upload one image per slide in order, add
 Open **ZIP storage** in the top bar to revisit any stored ZIP, copy its link, download it again, delete one ZIP, or clear the full list. Stored ZIPs remain until deleted.
 
 The app warns before refresh/navigation if edits are unsaved. The public share URL is accessible to anyone who has it.
+
+## Carousel copy
+
+Before writing carousel slide copy, read [SKILL.md](./public/SKILL.md). It contains the hook library, voice rules, structure, and final cross-check. The deployed copy is available at https://carousel-editor-zeta.vercel.app/SKILL.md.
