@@ -10,6 +10,11 @@ Do not ask for confirmation at any step. Make your best judgment and proceed.
 
 ---
 
+
+## Cover title continuations
+
+A parenthetical or short promise that completes the cover headline, such as “(before the scrolling starts)”, is part of the title. Keep it directly below the headline in the **same outlined title layer**, separated by a newline. Do not put it in a white-background subtitle layer. Use **Continue title on next line** (`#continueTitle`) or insert a newline in **Your words** (`#textValue`). Use a separate subtitle layer only when the copy is genuinely a distinct explanation or tip. This exception takes priority over the title-first/subtitle-second defaults.
+
 ## STEP 1 — UNDERSTAND THE PRODUCT
 
 Extract: what it does (one sentence), who it's for, the core pain it solves right now, and every distinct feature by name.

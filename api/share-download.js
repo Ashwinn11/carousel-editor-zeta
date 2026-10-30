@@ -16,7 +16,8 @@ export async function GET(request) {
     }
     if (!pathname) return Response.json({ error: 'No shared ZIP is available yet.' }, { status: 404 });
     const blob = await head(pathname);
-    return Response.redirect(blob.downloadUrl, 302);
+    const download=new URL(blob.downloadUrl);download.searchParams.set('v',String(new Date(blob.uploadedAt).getTime()));
+    return new Response(null,{status:302,headers:{Location:download.href,'Cache-Control':'no-store'}});
   } catch {
     return Response.json({ error: 'No shared ZIP is available yet.' }, { status: 404 });
   }

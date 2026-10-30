@@ -1,23 +1,311 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101011"><title>Still — Carousel Studio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=Permanent+Marker&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="storage.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101011">
+<title>Still — Carousel Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=Permanent+Marker&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="storage.css">
 </head>
 <body>
 <main class="studio">
-<header class="topbar"><a class="brand" href="#"><span class="brand-mark">S</span><span>still<span class="brand-dot">.</span></span></a><div class="project-title"><span class="eyebrow">CAROUSEL STUDIO</span><strong id="projectName">Untitled carousel</strong></div><div class="top-actions"><a class="button button-quiet" href="/AGENTS.md" target="_blank" rel="noopener">Agent guide ↗</a><button class="button button-quiet" id="openProject">Open project</button><button class="button button-quiet" id="addTextTop">＋ Add text</button><button class="button button-quiet" id="openStorage">ZIP storage <span id="zipCount" class="storage-count">0</span></button><button class="button button-light" id="exportAll">↥ Export ZIP</button></div></header>
-<div id="exportDialog" class="export-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="exportTitle" aria-hidden="true"><div class="export-card"><button id="closeExport" class="export-close" aria-label="Close export options">×</button><span class="eyebrow">EXPORT CAROUSEL</span><h2 id="exportTitle">Your ZIP is ready</h2><p>Download it here, or create a link to open the ZIP on your iPhone.</p><div class="export-actions"><button id="downloadReadyZip" class="button button-quiet">↓ Download ZIP</button><button id="shareReadyZip" class="button button-light">↗ Create iPhone link</button></div></div></div>
-<div id="storageDialog" class="export-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="storageTitle" aria-hidden="true"><div class="storage-card"><button id="closeStorage" class="export-close" aria-label="Close ZIP storage">×</button><span class="eyebrow">VERCEL BLOB STORAGE</span><h2 id="storageTitle">Your ZIPs</h2><p id="storageSummary">Loading stored ZIPs…</p><div id="shareList" class="share-list" role="list"></div><div id="storageEmpty" class="storage-empty hidden">No ZIPs stored yet. Create an iPhone link after exporting.</div><div class="storage-footer"><span>Files stay here until you delete them.</span><button id="clearStorage" class="button button-quiet danger-text">Delete all</button></div></div></div><section class="workspace">
-<aside class="left-rail"><div class="rail-heading"><div><span class="eyebrow">YOUR STORY</span><h1>Slides <span id="slideCount" class="count">0</span></h1></div><button id="addSlides" class="icon-button" aria-label="Add photos">+</button></div><div id="slideList" class="slide-list"></div><button id="uploadButton" class="upload-tile"><span class="upload-symbol">↑</span><span><b>Drop photos here</b><small>or browse your files</small></span></button><input id="imageInput" type="file" accept="image/*" multiple aria-label="Upload carousel images" hidden><input id="projectInput" type="file" accept=".zip,application/zip" aria-label="Open carousel project ZIP" hidden><div class="rail-foot"><span class="status-dot"></span><span id="saveStatus">No unsaved edits</span></div></aside>
-<section class="stage-area"><div class="stage-toolbar"><div class="stage-title"><span class="live-dot"></span><span id="stageLabel">Add photos to begin</span></div><div class="stage-actions"><label class="ratio-label" for="ratioSelect">RATIO</label><select id="ratioSelect" class="ratio-select"><option value="4:5">4:5</option><option value="1:1">1:1</option><option value="9:16" selected>9:16</option><option value="16:9">16:9</option></select><button id="fitButton" class="tiny-button">FIT</button><button id="deleteSlide" class="tiny-button danger">Delete slide</button></div></div><div id="dropZone" class="preview-wrap"><div class="preview-frame" id="previewFrame"><canvas id="preview" width="1080" height="1920" aria-label="Slide canvas. Drag text to position it."></canvas><div id="emptyPreview" class="empty-preview"><div class="empty-orbit"><span class="orbit-photo">▧</span><span class="orbit-plus">+</span></div><strong>Your first slide starts here</strong><span>Drop in a photo, then add the words.</span><button class="button button-light" id="emptyUpload">Choose photos</button></div><div id="dragHint" class="drag-hint">TAP TO SELECT</div></div></div><div class="stage-footer"><span id="exportDimensions">9:16 story · 1080 × 1920 px</span><span class="shortcut-hint"><kbd>←</kbd><kbd>→</kbd> switch slides</span></div><div class="filmstrip-wrap"><div id="filmstrip" class="filmstrip"></div></div></section>
-<aside class="inspector"><div class="inspector-head"><div><span class="eyebrow">TEXT EDITOR</span><h2>Make it yours</h2></div><button id="clearText" class="text-button">Clear</button></div><section id="imageControls" class="image-controls"><div class="image-panel-head"><span class="field-label">PHOTO</span><button id="resetImage" class="text-button">Reset</button></div><div class="label-row"><label class="field-label" for="imageZoom">IMAGE ZOOM</label><span id="imageZoomValue" class="tiny-meta">100%</span></div><input id="imageZoom" type="range" min="100" max="300" value="100"></section><div id="noSelection" class="no-selection"><div class="type-glyph">T</div><strong>No text selected</strong><span>Add a text layer or tap text on the slide to edit it.</span><button id="addTextEmpty" class="button button-dark">＋ Add text</button></div>
-<div id="textControls" class="controls hidden"><label class="field-label" for="textValue">YOUR WORDS <span id="charCount">0 / 200</span></label><textarea id="textValue" rows="3" maxlength="200" placeholder="Type something worth stopping for…"></textarea><div class="layer-manager"><div class="label-row"><span class="field-label">TEXT LAYERS</span><button id="addLayerAgain" class="text-button">＋ Add layer</button></div><div id="layerList" class="layer-list"></div></div><div class="sync-note"><span>↔</span><span>Text and styling apply to this slide only.</span></div>
-<div class="control-block"><div class="label-row"><span class="field-label">FONT</span><span id="fontName" class="tiny-meta">CLASSIC</span></div><div id="fontOptions" class="font-options"></div></div>
-<div class="control-block"><div class="label-row"><span class="field-label">ALIGNMENT</span></div><div class="segmented" id="alignOptions"><button type="button" data-align="left" aria-label="Align left"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 10h11M4 15h16M4 20h9"/></svg></button><button type="button" data-align="center" aria-label="Align center"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M6.5 10h11M4 15h16M7.5 20h9"/></svg></button><button type="button" data-align="right" aria-label="Align right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M9 10h11M4 15h16M11 20h9"/></svg></button></div></div>
-<div class="control-block"><div class="label-row"><span class="field-label">STYLE</span></div><div class="style-options" id="styleOptions"><button type="button" data-style="plain"><span class="style-sample">Aa</span><small>Plain</small></button><button type="button" data-style="outline"><span class="style-sample outline-sample">Aa</span><small>Outline</small></button><button type="button" data-style="background"><span class="style-sample background-sample">Aa</span><small>Background</small></button><button type="button" data-style="neon"><span class="style-sample neon-sample">Aa</span><small>Neon</small></button></div></div>
-<div class="control-block"><div class="label-row"><span class="field-label">COLOR</span><label class="color-picker-label" title="Custom color"><input id="customColor" type="color" value="#ffffff" aria-label="Choose color"><span>＋</span></label></div><div class="swatches" id="colorOptions"></div></div>
-<div class="control-block slider-block"><div class="label-row"><label class="field-label" for="sizeRange">FONT SIZE</label><span id="sizeValue" class="tiny-meta">46</span></div><input id="sizeRange" type="range" min="24" max="150" value="46"></div><div class="control-block slider-block"><div class="label-row"><label class="field-label" for="textZoom">PARAGRAPH ZOOM</label><span id="textZoomValue" class="tiny-meta">90%</span></div><input id="textZoom" type="range" min="50" max="200" value="90"></div><div class="control-block slider-block"><div class="label-row"><label class="field-label" for="textRotation">ROTATE TEXT</label><span id="textRotationValue" class="tiny-meta">0°</span></div><input id="textRotation" type="range" min="-180" max="180" value="0"></div>
-<div class="control-block"><div class="label-row"><span class="field-label">LAYER</span><button id="deleteLayer" class="text-button danger-text">Remove text</button></div></div></div><div class="inspector-bottom"><span class="tip-icon">✳</span><span>Drag text on the slide to position it. Use zoom and rotation to refine its scale.</span></div></aside>
-</section><div id="toast" class="toast" role="status" aria-live="polite"></div><div id="dropOverlay" class="drop-overlay"><div><span>＋</span><strong>Drop photos to add slides</strong><small>Images are placed in the order you drop them</small></div></div>
-</main><script type="module" src="/app.js"></script></body></html>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">S</span><span>still<span class="brand-dot">.</span></span></a>
+    <div class="project-title"><span class="eyebrow">CAROUSEL STUDIO</span><strong id="projectName">Untitled carousel</strong></div>
+    <div class="top-actions">
+      <a class="button button-quiet guide-link" href="/AGENTS.md" target="_blank" rel="noopener">Agent guide ↗</a>
+      <button class="button button-quiet" id="openWorkflow">Create / import</button>
+      <button class="button button-quiet" id="openProject">Open project</button>
+      <button class="button button-quiet" id="addTextTop">＋ Add text</button>
+      <button class="button button-quiet" id="openStorage">ZIP storage <span id="zipCount" class="storage-count">0</span></button>
+      <button class="button button-light" id="exportAll">↥ Export ZIP</button>
+      <button class="button button-quiet mobile-more-btn" id="mobileMoreBtn" aria-label="More options" aria-expanded="false">•••</button>
+    </div>
+    <div id="mobileMenu" class="mobile-menu hidden" role="menu">
+      <button class="mobile-menu-item" id="mobileWorkflow" role="menuitem">Create / import</button>
+      <button class="mobile-menu-item" id="mobileOpenProjectAction" role="menuitem">📂 Open project ZIP</button>
+      <a class="mobile-menu-item" href="/AGENTS.md" target="_blank" rel="noopener" role="menuitem">📖 Agent guide ↗</a>
+      <a class="mobile-menu-item" href="/SKILL.md" target="_blank" rel="noopener" role="menuitem">✍️ Copy rules ↗</a>
+    </div>
+  </header>
+
+  <div id="exportDialog" class="export-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="exportTitle" aria-hidden="true">
+    <div class="export-card">
+      <button id="closeExport" class="export-close" aria-label="Close export options">×</button>
+      <span class="eyebrow">EXPORT CAROUSEL</span>
+      <h2 id="exportTitle">Your ZIP is ready</h2>
+      <p>Download it here, or create a link to open the ZIP on your iPhone.</p>
+      <div class="export-actions">
+        <button id="downloadReadyZip" class="button button-quiet">↓ Download ZIP</button>
+        <button id="shareReadyZip" class="button button-light">↗ Create iPhone link</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="storageDialog" class="export-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="storageTitle" aria-hidden="true">
+    <div class="storage-card">
+      <button id="closeStorage" class="export-close" aria-label="Close ZIP storage">×</button>
+      <span class="eyebrow">VERCEL BLOB STORAGE</span>
+      <h2 id="storageTitle">Your ZIPs</h2>
+      <p id="storageSummary">Loading stored ZIPs…</p>
+      <div id="shareList" class="share-list" role="list"></div>
+      <div id="storageEmpty" class="storage-empty hidden">No ZIPs stored yet. Create an iPhone link after exporting.</div>
+      <div class="storage-footer">
+        <span>Files stay here until you delete them.</span>
+        <button id="clearStorage" class="button button-quiet danger-text">Delete all</button>
+      </div>
+    </div>
+  </div>
+
+  <dialog id="workflowDialog" class="workflow-dialog">
+    <button id="closeWorkflow" class="button button-quiet" type="button">Close</button>
+    <h2>Create and manage your carousel</h2>
+    <label for="carouselJson">Paste carousel JSON</label>
+    <textarea id="carouselJson" rows="8" placeholder='{"name":"My carousel","slides":[{"image":"https://…","title":"Headline","continuation":"(part of the headline)","subtitle":"Separate supporting copy"}]}'></textarea>
+    <button id="importCarouselJson" class="button button-light">Create from JSON</button>
+    <h3>Images from Pinterest</h3>
+    <label for="pinterestUrl">Pin or board URL</label>
+    <input id="pinterestUrl" type="url" placeholder="https://pin.it/…">
+    <button id="loadPinterest" class="button button-quiet">Load Pinterest images</button>
+    <p id="pinterestStatus" role="status">Select images in the order you want them to appear.</p>
+    <div id="pinterestGallery" class="pinterest-gallery"></div>
+    <button id="addPinterestImages" class="button button-light">Add selected images</button>
+    <h3>Style and project</h3>
+    <label for="presetSelect">Style preset</label>
+    <select id="presetSelect"><option value="classic">Classic outline + white subtitle</option><option value="all-outline">All outlined</option><option value="paper">White text cards</option></select>
+    <button id="applyPreset" class="button button-quiet">Apply to all slides</button>
+    <button id="reviewCarousel" class="button button-quiet">Review contact sheet</button>
+    <button id="saveEditableProject" class="button button-light">Save editable project ZIP</button>
+    <p id="workflowStatus" role="status"></p>
+  </dialog>
+  <dialog id="reviewDialog" class="workflow-dialog"><button id="closeReview" class="button button-quiet">Close review</button><h2>Review every slide</h2><div id="contactSheet" class="contact-sheet"></div></dialog>
+  <section class="workspace" id="workspace" data-active-tab="canvas">
+    <aside class="left-rail" id="leftRail">
+      <div class="rail-heading">
+        <div>
+          <span class="eyebrow">YOUR STORY</span>
+          <h1>Slides <span id="slideCount" class="count">0</span></h1>
+        </div>
+        <div class="rail-heading-actions">
+          <button id="addSlides" class="icon-button" aria-label="Add photos">+</button>
+        </div>
+      </div>
+      <div id="slideList" class="slide-list"></div>
+      <button id="uploadButton" class="upload-tile">
+        <span class="upload-symbol">↑</span>
+        <span><b>Drop photos here</b><small>or browse your files</small></span>
+      </button>
+      <input id="imageInput" type="file" accept="image/*" multiple aria-label="Upload carousel images" hidden>
+      <input id="projectInput" type="file" accept=".zip,application/zip" aria-label="Open carousel project ZIP" hidden>
+      <div class="rail-foot">
+        <span class="status-dot"></span>
+        <span id="saveStatus">No unsaved edits</span>
+      </div>
+    </aside>
+
+    <section class="stage-area" id="stageArea">
+      <div class="stage-toolbar">
+        <div class="stage-title">
+          <span class="live-dot"></span>
+          <span id="stageLabel">Add photos to begin</span>
+        </div>
+        <div class="stage-actions">
+          <label class="ratio-label" for="ratioSelect">RATIO</label>
+          <select id="ratioSelect" class="ratio-select">
+            <option value="4:5">4:5</option>
+            <option value="1:1">1:1</option>
+            <option value="9:16" selected>9:16</option>
+            <option value="16:9">16:9</option>
+          </select>
+          <button id="fitButton" class="tiny-button">FIT</button>
+          <button id="deleteSlide" class="tiny-button danger">Delete slide</button>
+        </div>
+      </div>
+
+      <div id="dropZone" class="preview-wrap">
+        <div class="preview-frame" id="previewFrame">
+          <canvas id="preview" width="1080" height="1920" aria-label="Slide canvas. Drag text to position it."></canvas>
+          <div id="emptyPreview" class="empty-preview">
+            <div class="empty-orbit">
+              <span class="orbit-photo">▧</span>
+              <span class="orbit-plus">+</span>
+            </div>
+            <strong>Your first slide starts here</strong>
+            <span>Drop in a photo, then add the words.</span>
+            <button class="button button-light" id="emptyUpload">Choose photos</button>
+          </div>
+          <div id="dragHint" class="drag-hint">TAP TO SELECT</div>
+          <button type="button" id="mobileEditPill" class="mobile-edit-pill hidden" aria-label="Edit selected text">✎ Edit text</button>
+        </div>
+      </div>
+
+      <div class="stage-footer">
+        <span id="exportDimensions">9:16 story · 1080 × 1920 px</span>
+        <span class="shortcut-hint"><kbd>←</kbd><kbd>→</kbd> switch slides</span>
+      </div>
+
+      <div class="filmstrip-wrap">
+        <div id="filmstrip" class="filmstrip"></div>
+      </div>
+    </section>
+
+    <aside class="inspector" id="inspector">
+      <div class="inspector-head">
+        <div>
+          <span class="eyebrow">TEXT EDITOR</span>
+          <h2>Make it yours</h2>
+        </div>
+        <div class="inspector-head-actions">
+          <button type="button" id="mobileBackToCanvas" class="button button-quiet mobile-back-btn">← Canvas</button>
+          <button id="clearText" class="text-button">Clear</button>
+        </div>
+      </div>
+
+      <section id="imageControls" class="image-controls">
+        <div class="image-panel-head">
+          <span class="field-label">PHOTO</span>
+          <button id="resetImage" class="text-button">Reset</button>
+        </div>
+        <div class="label-row">
+          <label class="field-label" for="imageZoom">IMAGE ZOOM</label>
+          <span id="imageZoomValue" class="tiny-meta">100%</span>
+        </div>
+        <input id="imageZoom" type="range" min="100" max="300" value="100">
+      </section>
+
+      <div id="noSelection" class="no-selection">
+        <div class="type-glyph">T</div>
+        <strong>No text selected</strong>
+        <span>Add a text layer or tap text on the slide to edit it.</span>
+        <button id="addTextEmpty" class="button button-dark">＋ Add text</button>
+      </div>
+
+      <div id="textControls" class="controls hidden">
+        <label class="field-label" for="textValue">YOUR WORDS <span id="charCount">0 / 200</span></label>
+        <textarea id="textValue" rows="3" maxlength="200" placeholder="Type something worth stopping for…"></textarea>
+        <button type="button" id="continueTitle" class="text-button">↵ Continue title on next line</button>
+
+        <div class="layer-manager">
+          <div class="label-row">
+            <span class="field-label">TEXT LAYERS</span>
+            <button id="addLayerAgain" class="text-button">＋ Add layer</button>
+          </div>
+          <div id="layerList" class="layer-list"></div>
+        </div>
+
+        <div class="sync-note">
+          <span>↔</span>
+          <span>Text and styling apply to this slide only.</span>
+        </div>
+
+        <div class="control-block">
+          <div class="label-row">
+            <span class="field-label">FONT</span>
+            <span id="fontName" class="tiny-meta">CLASSIC</span>
+          </div>
+          <div id="fontOptions" class="font-options"></div>
+        </div>
+
+        <div class="control-block">
+          <div class="label-row">
+            <span class="field-label">ALIGNMENT</span>
+          </div>
+          <div class="segmented" id="alignOptions">
+            <button type="button" data-align="left" aria-label="Align left"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 10h11M4 15h16M4 20h9"/></svg></button>
+            <button type="button" data-align="center" aria-label="Align center"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M6.5 10h11M4 15h16M7.5 20h9"/></svg></button>
+            <button type="button" data-align="right" aria-label="Align right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M9 10h11M4 15h16M11 20h9"/></svg></button>
+          </div>
+        </div>
+
+        <div class="control-block">
+          <div class="label-row">
+            <span class="field-label">STYLE</span>
+          </div>
+          <div class="style-options" id="styleOptions">
+            <button type="button" data-style="plain"><span class="style-sample">Aa</span><small>Plain</small></button>
+            <button type="button" data-style="outline"><span class="style-sample outline-sample">Aa</span><small>Outline</small></button>
+            <button type="button" data-style="background"><span class="style-sample background-sample">Aa</span><small>Background</small></button>
+            <button type="button" data-style="neon"><span class="style-sample neon-sample">Aa</span><small>Neon</small></button>
+          </div>
+        </div>
+
+        <div class="control-block">
+          <div class="label-row">
+            <span class="field-label">COLOR</span>
+            <label class="color-picker-label" title="Custom color"><input id="customColor" type="color" value="#ffffff" aria-label="Choose color"><span>＋</span></label>
+          </div>
+          <div class="swatches" id="colorOptions"></div>
+        </div>
+
+        <div class="control-block slider-block">
+          <div class="label-row">
+            <label class="field-label" for="sizeRange">FONT SIZE</label>
+            <span id="sizeValue" class="tiny-meta">46</span>
+          </div>
+          <input id="sizeRange" type="range" min="24" max="150" value="46">
+        </div>
+
+        <div class="control-block slider-block">
+          <div class="label-row">
+            <label class="field-label" for="textZoom">PARAGRAPH ZOOM</label>
+            <span id="textZoomValue" class="tiny-meta">90%</span>
+          </div>
+          <input id="textZoom" type="range" min="50" max="200" value="90">
+        </div>
+
+        <div class="control-block slider-block">
+          <div class="label-row">
+            <label class="field-label" for="textRotation">ROTATE TEXT</label>
+            <span id="textRotationValue" class="tiny-meta">0°</span>
+          </div>
+          <input id="textRotation" type="range" min="-180" max="180" value="0">
+        </div>
+
+        <div class="control-block">
+          <div class="label-row">
+            <span class="field-label">LAYER</span>
+            <button id="deleteLayer" class="text-button danger-text">Remove text</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="inspector-bottom">
+        <span class="tip-icon">✳</span>
+        <span>Drag text on the slide to position it. Use zoom and rotation to refine its scale.</span>
+      </div>
+    </aside>
+  </section>
+
+  <nav class="mobile-nav" id="mobileNav" aria-label="Editor views">
+    <button type="button" class="mobile-nav-btn active" data-tab="canvas" id="tabCanvas" aria-label="Slide preview canvas">
+      <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+      <span>Canvas</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" data-tab="edit" id="tabEdit" aria-label="Text & Photo Editor">
+      <span class="mobile-tab-badge-dot hidden" id="editLayerBadge" aria-hidden="true"></span>
+      <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      <span>Edit</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" data-tab="slides" id="tabSlides" aria-label="Manage slides">
+      <span class="mobile-tab-count" id="mobileSlideCount">0</span>
+      <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+      <span>Slides</span>
+    </button>
+  </nav>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="dropOverlay" class="drop-overlay">
+    <div>
+      <span>＋</span>
+      <strong>Drop photos to add slides</strong>
+      <small>Images are placed in the order you drop them</small>
+    </div>
+  </div>
+</main>
+<script type="module" src="/app.js"></script>
+</body>
+</html>

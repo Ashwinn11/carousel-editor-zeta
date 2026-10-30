@@ -16,3 +16,7 @@ Click **Export ZIP** to download the PNG-only archive locally or create an iPhon
 The `/api/share-upload` function issues short-lived upload tokens, lists stored ZIPs, and supports individual or bulk deletion. `BLOB_READ_WRITE_TOKEN` is supplied by the Vercel Blob integration and stays on the server.
 
 See [AGENTS.md](./AGENTS.md) for the editor defaults and agent workflow, and [public/SKILL.md](./public/SKILL.md) for the carousel hooks and writing rules. The deployed skill is available at https://carousel-editor-zeta.vercel.app/SKILL.md.
+
+## Creation tools
+
+Create / import supports structured JSON, a public Pinterest photo picker, reusable presets, a contact sheet, and editable project ZIPs. The browser API is documented in [AGENTS.md](./AGENTS.md). Stored ZIPs support in-browser preview and stable download links that update when a project is re-exported. Posting ZIPs remain PNG-only.

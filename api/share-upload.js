@@ -42,7 +42,7 @@ export async function POST(request) {
           maximumSizeInBytes: MAX_SIZE,
           validUntil: Date.now() + 5 * 60 * 1000,
           addRandomSuffix: false,
-          allowOverwrite: false,
+          allowOverwrite: true,
           cacheControlMaxAge: 60,
         };
       },
