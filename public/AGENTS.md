@@ -88,3 +88,5 @@ Slide indexes start at zero. `updateSlide` edits `title`, `continuation`, `subti
 **Pinterest:** Paste a public pin or board URL, load its available images, then select thumbnails in slide order. Import fetches the initial public page, not the entire board's pagination. Private or blocked pages require direct photo uploads. The server accepts only Pinterest page hosts and `i.pinimg.com` images.
 
 **Stored ZIP preview:** In ZIP storage, choose **Preview** to see every rendered slide without saving or unzipping a file. Tap a slide to open its full-size PNG. Preview reads the ZIP in the browser and does not modify the current project.
+
+Cover hierarchy rule: a bracketed continuation below a headline must be smaller than the main title while retaining the same outline and no background. Keep it on a new line in the title layer. The renderer automatically scales parenthetical `(…)` and bracketed `[…]` continuation paragraphs to 36/46 (about 78%) of the title size, including wrapping, preview, and export. Ordinary headline line breaks keep the main title size.

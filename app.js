@@ -116,9 +116,16 @@ import { upload } from '@vercel/blob/client';
     return out;
   }
   function drawText(item, showSelection=false) {
-    const size=item.size*1.65,font=fontCss(item,size),objectScale=(item.zoom||100)/100,maxWidth=canvas.width*.84,lines=wrapText(item.text,maxWidth,size,font),lineHeight=size*1.16;
+    const size=item.size*1.65,font=fontCss(item,size),objectScale=(item.zoom||100)/100,maxWidth=canvas.width*.84,lineHeight=size*1.16;
+    const rows=String(item.text||'').split('\n').flatMap((paragraph,index)=>{
+      const bracketed=index>0&&/^(\(.*\)|\[.*\])$/.test(paragraph.trim());
+      const rowSize=item.role==='title'&&bracketed?size*(SUBTITLE_SIZE/TITLE_SIZE):size;
+      const rowFont=fontCss(item,rowSize);
+      return wrapText(paragraph,maxWidth,rowSize,rowFont).map(text=>({text,font:rowFont}));
+    });
+    const lines=rows.map(row=>row.text);
     const blockH=Math.max(lineHeight,lines.length*lineHeight),centerX=canvas.width*(item.x??50)/100,centerY=canvas.height*(item.y??70)/100,top=-blockH/2;
-    const widths=lines.map(t=>{ctx.font=font;return ctx.measureText(t).width;}),maxLine=Math.max(1,...widths),padX=size*.28,padY=size*.15;
+    const widths=rows.map(row=>{ctx.font=row.font;return ctx.measureText(row.text).width;}),maxLine=Math.max(1,...widths),padX=size*.28,padY=size*.15;
     const left=item.align==='left'?0:item.align==='right'?-maxLine:-maxLine/2,right=left+maxLine,angle=(item.rotation||0)*Math.PI/180;
     const corners=[[left-padX,top-padY],[right+padX,top-padY],[right+padX,top+blockH+padY],[left-padX,top+blockH+padY]].map(([x,y])=>{x*=objectScale;y*=objectScale;return[centerX+x*Math.cos(angle)-y*Math.sin(angle),centerY+x*Math.sin(angle)+y*Math.cos(angle)];});
     const bounds={left:Math.min(...corners.map(p=>p[0])),right:Math.max(...corners.map(p=>p[0])),top:Math.min(...corners.map(p=>p[1])),bottom:Math.max(...corners.map(p=>p[1]))};item._bounds=bounds;
@@ -127,7 +134,7 @@ import { upload } from '@vercel/blob/client';
     const contrast=(hex)=>{const h=hex.replace('#','');const n=parseInt(h.length===3?h.split('').map(x=>x+x).join(''):h,16);return ((n>>16)*299+((n>>8)&255)*587+(n&255)*114)/1000>145?'#171717':'#ffffff';};
     const fill=item.style==='background'?contrast(item.color):(item.style==='outline'?'#ffffff':item.color);
     if(item.style==='background'){ctx.save();ctx.globalAlpha=BACKGROUND_OPACITY/100;ctx.fillStyle=item.color;drawConnectedHighlight(widths,lineHeight,top,blockH,padX,padY,item.align,Math.min(lineHeight*.28,size*.34));ctx.restore();}
-    lines.forEach((line,i)=>{const y=top+lineHeight*(i+.5),x=0;if(item.style==='neon'){ctx.shadowColor=item.color;ctx.shadowBlur=size*.24;ctx.fillStyle=item.color;ctx.fillText(line,x,y,maxWidth);ctx.shadowBlur=size*.42;ctx.fillText(line,x,y,maxWidth);ctx.shadowBlur=0;}else if(item.style==='outline'){ctx.strokeStyle=item.color;ctx.lineWidth=OUTLINE_WIDTH;ctx.strokeText(line,x,y,maxWidth);ctx.fillStyle=fill;ctx.fillText(line,x,y,maxWidth);}else{ctx.fillStyle=fill;ctx.fillText(line,x,y,maxWidth);}});
+    lines.forEach((line,i)=>{ctx.font=rows[i].font;const y=top+lineHeight*(i+.5),x=0;if(item.style==='neon'){ctx.shadowColor=item.color;ctx.shadowBlur=size*.24;ctx.fillStyle=item.color;ctx.fillText(line,x,y,maxWidth);ctx.shadowBlur=size*.42;ctx.fillText(line,x,y,maxWidth);ctx.shadowBlur=0;}else if(item.style==='outline'){ctx.strokeStyle=item.color;ctx.lineWidth=OUTLINE_WIDTH;ctx.strokeText(line,x,y,maxWidth);ctx.fillStyle=fill;ctx.fillText(line,x,y,maxWidth);}else{ctx.fillStyle=fill;ctx.fillText(line,x,y,maxWidth);}});
     if(showSelection&&item.id===selectedLayer){const box={x:left-padX-10,y:top-padY-8,w:maxLine+padX*2+20,h:blockH+padY*2+16};ctx.setLineDash([9,7]);ctx.lineWidth=3;ctx.strokeStyle='#d5ff58';ctx.strokeRect(box.x,box.y,box.w,box.h);ctx.setLineDash([]);ctx.fillStyle='#d5ff58';[[box.x,box.y],[box.x+box.w,box.y],[box.x,box.y+box.h],[box.x+box.w,box.y+box.h]].forEach(([x,y])=>{ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill();});}
     ctx.restore();
   }
