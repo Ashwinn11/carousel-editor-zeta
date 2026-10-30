@@ -254,6 +254,10 @@ import { upload } from '@vercel/blob/client';
   function formatBytes(bytes){return bytes<1024*1024?`${Math.ceil(bytes/1024)} KB`:`${(bytes/1024/1024).toFixed(1)} MB`;}
   function openStorage(){$('storageDialog').classList.remove('hidden');$('storageDialog').setAttribute('aria-hidden','false');loadSharedZips();}
   function closeStorage(){$('storageDialog').classList.add('hidden');$('storageDialog').setAttribute('aria-hidden','true');}
+  function storageIcon(name){
+    const paths={preview:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/>',download:'<path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/>',delete:'<path d="M3 6h18M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7"/>'};
+    return `<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${paths[name]}</svg>`;
+  }
   async function loadSharedZips(){
     try{
       const response=await fetch('/api/share-upload');if(!response.ok)throw new Error('Could not load storage.');
@@ -261,7 +265,7 @@ import { upload } from '@vercel/blob/client';
       const total=blobs.reduce((sum,blob)=>sum+blob.size,0);
       $('zipCount').textContent=blobs.length;$('storageSummary').textContent=`${blobs.length} ZIP${blobs.length===1?'':'s'} · ${formatBytes(total)} total`;
       $('storageEmpty').classList.toggle('hidden',blobs.length>0);$('clearStorage').disabled=blobs.length===0;
-      $('shareList').innerHTML=blobs.map(blob=>{const name=blob.pathname.split('/').pop(),date=new Date(blob.uploadedAt).toLocaleString(),path=encodeURIComponent(blob.pathname),link=shareDownloadUrl(blob.pathname);return `<article class="share-item" role="listitem"><div class="share-file"><strong title="${esc(name)}">${esc(name)}</strong><span>${formatBytes(blob.size)} · ${esc(date)}</span></div><div class="share-item-actions"><button class="button button-quiet" data-preview-path="${path}" aria-label="Preview ${esc(name)}">Preview</button><button class="button button-quiet" data-copy-path="${path}">Copy link</button><a class="button button-quiet" href="${link}" target="_blank" rel="noopener">Download</a><button class="button button-quiet danger-text" data-delete-path="${path}">Delete</button></div></article>`;}).join('');
+      $('shareList').innerHTML=blobs.map(blob=>{const name=blob.pathname.split('/').pop(),date=new Date(blob.uploadedAt).toLocaleString(),path=encodeURIComponent(blob.pathname),link=shareDownloadUrl(blob.pathname);return `<article class="share-item" role="listitem"><div class="share-file"><strong title="${esc(name)}">${esc(name)}</strong><span>${formatBytes(blob.size)} · ${esc(date)}</span></div><div class="share-item-actions"><button class="button button-quiet storage-icon" data-preview-path="${path}" aria-label="Preview ${esc(name)}" title="Preview">${storageIcon('preview')}</button><button class="button button-quiet storage-icon" data-copy-path="${path}" aria-label="Copy link for ${esc(name)}" title="Copy link">${storageIcon('copy')}</button><a class="button button-quiet storage-icon" href="${link}" target="_blank" rel="noopener" aria-label="Download ${esc(name)}" title="Download">${storageIcon('download')}</a><button class="button button-quiet danger-text storage-icon" data-delete-path="${path}" aria-label="Delete ${esc(name)}" title="Delete">${storageIcon('delete')}</button></div></article>`;}).join('');
     }catch(error){$('storageSummary').textContent=error.message||'Could not load ZIP storage.';$('zipCount').textContent='!';}
   }
   async function previewStoredZip(pathname){
